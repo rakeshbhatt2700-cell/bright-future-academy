@@ -1,0 +1,151 @@
+const modal = document.getElementById('enrolModal');
+const closeModalButton = document.querySelector('.close-modal');
+const triggerButtons = document.querySelectorAll('[data-enrol-trigger]');
+const form = document.getElementById('applicationForm');
+const mobileToggle = document.querySelector('.mobile-menu-toggle');
+const navMenu = document.getElementById('navMenu');
+
+function openEnrolModal() {
+  if (!modal) return;
+
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEnrolModal() {
+  if (!modal) return;
+
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+triggerButtons.forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    openEnrolModal();
+  });
+});
+
+if (closeModalButton) {
+  closeModalButton.addEventListener('click', closeEnrolModal);
+}
+
+if (modal) {
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeEnrolModal();
+  });
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && modal && modal.classList.contains('active')) {
+    closeEnrolModal();
+  }
+});
+
+if (mobileToggle && navMenu) {
+  mobileToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    mobileToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+
+document.querySelectorAll('.navlinks a').forEach((link) => {
+  link.addEventListener('click', () => {
+    if (navMenu) navMenu.classList.remove('open');
+    if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+function buildWhatsAppMessage(data) {
+  const name = data.name || 'N/A';
+  const parent = data.parent || 'N/A';
+  const phone = data.phone || 'N/A';
+  const classGrade = data.classGrade || 'N/A';
+  const school = data.school || 'N/A';
+  const timing = data.timing || 'N/A';
+  const course = data.course || 'N/A';
+  const message = data.message || 'N/A';
+
+  return [
+    'Hello Bright Future Academy,',
+    '',
+    'I would like to enrol my child.',
+    '',
+    `Student Name: ${name}`,
+    `Parent/Guardian: ${parent}`,
+    `Phone: ${phone}`,
+    `Class/Grade: ${classGrade}`,
+    `School Name: ${school}`,
+    `Preferred Class Timing: ${timing}`,
+    `Interested In: ${course}`,
+    `Message: ${message}`,
+    '',
+    'Please share available seats and class timings. Thank you.'
+  ].join('\n');
+}
+
+if (form) {
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const getValue = (key) => (formData.get(key) || '').toString().trim();
+
+    const payload = {
+      name: getValue('name'),
+      parent: getValue('parent'),
+      phone: getValue('phone'),
+      classGrade: getValue('class'),
+      school: getValue('school'),
+      timing: getValue('timing'),
+      course: getValue('course'),
+      message: getValue('message')
+    };
+
+    const { name, parent, phone, classGrade, course } = payload;
+
+    if (!name || !parent || !phone || !classGrade || !course) {
+      alert('Please fill all required fields.');
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert('Please enter a valid 10-digit phone number.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/.netlify/functions/enquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || 'Submission failed.');
+      }
+
+      const result = await response.json();
+      const messageText = buildWhatsAppMessage(payload);
+
+      console.log('Backend response:', result);
+
+      window.open(
+        `https://wa.me/918750419550?text=${encodeURIComponent(messageText)}`,
+        '_blank',
+        'noopener'
+      );
+
+      form.reset();
+      closeEnrolModal();
+    } catch (error) {
+      console.error(error);
+      alert('There was a problem sending your request. Please try again or contact the academy directly.');
+    }
+  });
+}

@@ -1,0 +1,197 @@
+const highlights = [
+  { label: 'Parent satisfaction', value: '5.0★' },
+  { label: 'Core programmes', value: '2' },
+  { label: 'Personal attention', value: '1:1' },
+  { label: 'Feedback cycle', value: 'Ongoing' }
+];
+
+const programmes = [
+  {
+    title: 'Academic Coaching',
+    icon: '🎓',
+    text: 'Concept-based learning, guided practice, and regular assessment to strengthen fundamentals and confidence.'
+  },
+  {
+    title: 'Painting Classes',
+    icon: '🎨',
+    text: 'Creative sessions that help students improve observation, technique, and artistic expression.'
+  },
+  {
+    title: 'Progress Tracking',
+    icon: '📝',
+    text: 'Consistent evaluation helps identify priorities and keeps parents informed through regular updates.'
+  }
+];
+
+export default function HomePage() {
+  return (
+    <main>
+      <header className="site-header">
+        <div className="container nav">
+          <div className="brand">
+            <div className="logo">B</div>
+            <div>
+              <strong>Bright Future Academy</strong>
+              <small>Neb Sarai - New Delhi</small>
+            </div>
+          </div>
+
+          <nav className="nav-links">
+            <a href="#about">About</a>
+            <a href="#classes">Classes</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact">Contact</a>
+            <a className="btn btn-primary" href="#apply">Apply Now</a>
+          </nav>
+        </div>
+      </header>
+
+      <section className="hero">
+        <div className="container hero-grid">
+          <div>
+            <div className="eyebrow">Trusted by local students and families</div>
+            <h1>Academic excellence with a <span>creative edge</span>.</h1>
+            <p className="hero-copy">
+              Bright Future Academy in Neb Sarai offers focused academic coaching alongside painting classes,
+              designed to help students build confidence, improve performance, and grow with purpose.
+            </p>
+            <div className="hero-actions">
+              <a className="btn btn-primary" href="#apply">Enrol Now</a>
+              <a className="btn btn-outline" href="tel:+918750419550">Contact Academy</a>
+            </div>
+            <div className="rating">
+              <span className="stars">★★★★★</span>
+              <span><strong>5.0</strong> rating - <strong>Trusted by families</strong></span>
+            </div>
+          </div>
+
+          <div className="hero-card">
+            <h2>Why families choose us</h2>
+            <p>Structured support, consistent guidance, and a positive environment that encourages progress.</p>
+            <div className="mini-grid">
+              {highlights.map((item) => (
+                <div className="mini" key={item.label}>
+                  <b>{item.value}</b>
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="hero-card-actions">
+              <a className="btn btn-primary" href="#apply">Enrol your child</a>
+              <a className="btn btn-outline" href="#classes">Explore programmes</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="showcase" id="about">
+        <div className="container showcase-grid">
+          <div className="logo-panel">
+            <div className="section-head">
+              <div className="tag">Brand identity</div>
+              <h2>Bright Future Academy.</h2>
+            </div>
+            <div className="logo-lockup">
+              <div className="logo-mark">B</div>
+              <div className="logo-text">
+                <strong>Bright Future</strong>
+                <small>Academy</small>
+              </div>
+            </div>
+          </div>
+
+          <div className="review-visual">
+            <div className="review-head">
+              <div>
+                <div className="tag">Parent feedback</div>
+                <div className="review-score">5.0</div>
+              </div>
+              <div className="review-badge">★★★★★</div>
+            </div>
+            <div className="mini-quote">
+              <p>“Supportive learning environment with focused academic guidance and a positive teaching approach.”</p>
+              <small>Parent feedback</small>
+            </div>
+            <div className="mini-quote">
+              <p>“A dedicated teacher who helps students improve through regular practice and encouragement.”</p>
+              <small>Family feedback</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="classes">
+        <div className="container">
+          <div className="section-head">
+            <div className="tag">Our programmes</div>
+            <h2>Personalised learning designed for growth.</h2>
+            <p>Focused academic support and painting classes help students grow in their studies and creativity.</p>
+          </div>
+
+          <div className="cards">
+            {programmes.map((item) => (
+              <article className="card" key={item.title}>
+                <div className="icon">{item.icon}</div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="apply" id="apply">
+        <div className="container apply-grid">
+          <div>
+            <div className="section-head">
+              <div className="tag">Enrolment</div>
+              <h2>Secure a place for your child.</h2>
+              <p>Send an enrollment request on WhatsApp and we will follow up about availability and class timings.</p>
+            </div>
+            <div className="contact-box">
+              <a href="tel:+918750419550">Call: 087504 19550</a>
+              <a href="https://wa.me/918750419550" target="_blank" rel="noreferrer">WhatsApp the academy</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Khasra+No.+133%2C+Pocket+E%2C+Neb+Sarai%2C+Sainik+Farm%2C+New+Delhi%2C+Delhi+110068" target="_blank" rel="noreferrer">
+                Khasra No. 133, Pocket E, Neb Sarai, Sainik Farm, New Delhi, Delhi 110068
+              </a>
+            </div>
+          </div>
+
+          <div className="apply-panel">
+            <h3>Ready to get started?</h3>
+            <p>Choose academic coaching, painting classes, or both. Share your details and preferred timing.</p>
+            <a className="btn btn-primary" href="https://wa.me/918750419550">Open enrollment form</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="location" id="contact">
+        <div className="container">
+          <div className="section-head">
+            <div className="tag">Find us</div>
+            <h2>Bright Future Academy, Neb Sarai.</h2>
+            <p>Visit the academy or contact the team to ask about available seats and class timings.</p>
+          </div>
+          <div className="location-grid">
+            <div className="card">
+              <h3>Academy details</h3>
+              <p style={{ marginTop: 10 }}>Khasra No. 133, Pocket E, Neb Sarai, Sainik Farm, New Delhi, Delhi 110068</p>
+              <p style={{ marginTop: 10 }}>
+                Phone: <a href="tel:+918750419550" style={{ color: '#2563eb', fontWeight: 800 }}>087504 19550</a>
+              </p>
+            </div>
+            <div className="map-embed">
+              <iframe
+                title="Map location"
+                src="https://maps.google.com/maps?q=Khasra%20No.%20133%2C%20Pocket%20E%2C%20Neb%20Sarai%2C%20Sainik%20Farm%2C%20New%20Delhi%2C%20Delhi%20110068&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
